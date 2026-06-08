@@ -1,0 +1,1687 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e47067a2-3f7b-44ba-91cc-f3a81011ef36",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs",
+          "mode": "list",
+          "cachedResultName": "Copy of Chitkara AI-Powered Enterprise Financial Risk Monitoring & Intelligent Approval System",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2263047,
+          "mode": "list",
+          "cachedResultName": "Invoice_Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs/edit#gid=2263047"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "c2780509-1a9a-4e98-b541-b9f5c238026d",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "yEgaColFwLNmFz3A",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "61390c48-e7e9-432c-9331-ec065ccc65e2",
+              "leftValue": "={{ $json.Amount }}",
+              "rightValue": 100000,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "8059ef3a-60db-4569-96e4-8bc1d723cc17",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "nagpaldivanshu99@gmail.com",
+        "subject": "High Invoice / Fraud Alert",
+        "message": "=<h2 style=\"color:#B22222;\">\n🚨 High Invoice / Fraud Alert\n</h2>\n\n<p>\nA high-value financial transaction has been detected by the \n<b>AI-Powered Enterprise Financial Risk Monitoring System</b>.\n</p>\n\n<hr>\n\n<h3>📄 Invoice Details</h3>\n\n<table border=\"1\" cellpadding=\"10\" cellspacing=\"0\" style=\"border-collapse: collapse; width: 70%;\">\n\n<tr style=\"background-color:#f2f2f2;\">\n<td><b>Invoice ID</b></td>\n<td>{{$json[\"Invoice_ID\"]}}</td>\n</tr>\n\n<tr>\n<td><b>Vendor Name</b></td>\n<td>{{$json[\"Vendor_Name\"]}}</td>\n</tr>\n\n<tr style=\"background-color:#f2f2f2;\">\n<td><b>Invoice Amount</b></td>\n<td>₹ {{$json[\"Amount\"]}}</td>\n</tr>\n\n<tr>\n<td><b>Department</b></td>\n<td>{{$json[\"Department\"]}}</td>\n</tr>\n\n<tr style=\"background-color:#f2f2f2;\">\n<td><b>Risk Status</b></td>\n<td style=\"color:red;\">\n<b>{{$json[\"Risk_Flag\"]}}</b>\n</td>\n</tr>\n\n<tr>\n<td><b>Approval Level</b></td>\n<td>{{$json[\"Approval_Level\"]}}</td>\n</tr>\n\n</table>\n\n<br>\n\n<h3>⚠ Recommended Action</h3>\n\n<ul>\n<li>Review invoice authenticity</li>\n<li>Validate vendor details</li>\n<li>Escalate for finance approval if required</li>\n<li>Check for duplicate or suspicious transactions</li>\n</ul>\n\n<br>\n\n<p style=\"color:gray;\">\nThis alert was generated automatically using the \n<b>n8n AI Financial Automation Workflow</b>.\n</p>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        -96
+      ],
+      "id": "bbc5203a-3a9b-4b71-a94e-53c3cc298cd9",
+      "name": "Send a message",
+      "webhookId": "577291e9-7d72-4ec2-bdbd-0f3bd9be4cc3",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "L0szFbuJNr5ckZPl",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a183e6ad-410a-4a94-935b-acb197990d8b",
+              "leftValue": "={{ $json.Liabilities }}",
+              "rightValue": "={{ $json.Assets }}",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        624,
+        96
+      ],
+      "id": "cf9eb4ea-c325-40d2-85c9-d6aacb921975",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "sendTo": "nagpaldivanshu99@gmail.com",
+        "subject": "Financial Risk Alert",
+        "message": "=<h2 style=\"color:#B22222;\"> 🚨 Financial Risk Alert </h2>  <p> The AI-Powered Enterprise Financial Monitoring System detected a high financial risk condition because company liabilities are greater than assets. </p>  <hr>  <h3>📊 Financial Risk Summary</h3>  <table border=\"1\" cellpadding=\"10\" cellspacing=\"0\" style=\"border-collapse: collapse; width:70%;\">  <tr style=\"background-color:#f2f2f2;\"> <td><b>Company ID</b></td> <td>{{$json[\"Company_ID\"]}}</td> </tr>  <tr> <td><b>Vendor Name</b></td> <td>{{$json[\"Vendor_Name\"]}}</td> </tr>  <tr style=\"background-color:#f2f2f2;\"> <td><b>Assets</b></td> <td>₹ {{$json[\"Assets\"]}}</td> </tr>  <tr> <td><b>Liabilities</b></td> <td style=\"color:red;\"> <b>₹ {{$json[\"Liabilities\"]}}</b> </td> </tr>  <tr style=\"background-color:#f2f2f2;\"> <td><b>Risk Status</b></td> <td>{{$json[\"Risk_Status\"]}}</td> </tr>  </table>  <br>  <h3>⚠ Recommended Action</h3>  <ul> <li>Review company’s debt burden</li> <li>Check repayment capacity</li> <li>Evaluate financial stability before approval</li> <li>Escalate to finance head for review</li> </ul>  <br>  <p style=\"color:gray;\"> This alert was generated automatically using the  <b>n8n AI Financial Automation Workflow</b>. </p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        0
+      ],
+      "id": "08e12835-3ccc-4cd1-8dbf-2f582c0561dd",
+      "name": "Send a message1",
+      "webhookId": "c54b2116-7440-436f-8539-3359c7384bff",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "L0szFbuJNr5ckZPl",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c9a8ae4a-514a-4e71-9edc-31578c1bd917",
+              "leftValue": "={{ $json.EBITDA / $json.Revenue }}",
+              "rightValue": 0.15,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        832,
+        192
+      ],
+      "id": "d215a20b-4107-4128-9f8e-e1bf5062aa2d",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "sendTo": "nagpaldivanshu99@gmail.com",
+        "subject": "Operational Inefficiency Alert",
+        "message": "=<h2 style=\"color:#D2691E;\"> ⚠ Operational Inefficiency Alert </h2>  <p> The AI-Powered Enterprise Financial Monitoring System detected low operational efficiency because the EBITDA margin is below the acceptable threshold of 15%. </p>  <hr>  <h3>📊 Operational Performance Summary</h3>  <table border=\"1\" cellpadding=\"10\" cellspacing=\"0\" style=\"border-collapse: collapse; width:70%;\">  <tr style=\"background-color:#f2f2f2;\"> <td><b>Company ID</b></td> <td>{{$json[\"Company_ID\"]}}</td> </tr>  <tr> <td><b>Vendor Name</b></td> <td>{{$json[\"Vendor_Name\"]}}</td> </tr>  <tr style=\"background-color:#f2f2f2;\"> <td><b>Revenue</b></td> <td>₹ {{$json[\"Revenue\"]}}</td> </tr>  <tr> <td><b>EBITDA</b></td> <td>₹ {{$json[\"EBITDA\"]}}</td> </tr>  <tr style=\"background-color:#f2f2f2;\"> <td><b>EBITDA Margin</b></td> <td style=\"color:red;\"> <b>{{ (($json[\"EBITDA\"] / $json[\"Revenue\"]) * 100).toFixed(2) }}%</b> </td> </tr>  <tr> <td><b>Risk Status</b></td> <td>{{$json[\"Risk_Status\"]}}</td> </tr>  </table>  <br>  <h3>⚠ Recommended Action</h3>  <ul> <li>Review operational cost structure</li> <li>Analyze profitability and margin pressure</li> <li>Identify areas for cost optimization</li> <li>Escalate for operational efficiency review</li> </ul>  <br>  <p style=\"color:gray;\"> This alert was generated automatically using the  <b>n8n AI Financial Automation Workflow</b>. </p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        96
+      ],
+      "id": "860a100c-872b-40b9-9fb8-8a7efe3de64d",
+      "name": "Send a message2",
+      "webhookId": "21c2c664-09ac-4e62-a5b7-7bcf668addf2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "L0szFbuJNr5ckZPl",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "nagpaldivanshu99@gmail.com",
+        "subject": "Low Risk / Auto Approved",
+        "message": "=<h2 style=\"color:#228B22;\"> ✅ Low Risk / Auto Approved </h2>  <p> The AI-Powered Enterprise Financial Monitoring System analyzed the transaction and classified it as  <b>LOW RISK</b>. </p>  <hr>  <h3>📄 Invoice Summary</h3>  <table border=\"1\" cellpadding=\"10\" cellspacing=\"0\" style=\"border-collapse: collapse; width:70%;\">  <tr style=\"background-color:#f2f2f2;\"> <td><b>Invoice ID</b></td> <td>{{$json[\"Invoice_ID\"]}}</td> </tr>  <tr> <td><b>Vendor Name</b></td> <td>{{$json[\"Vendor_Name\"]}}</td> </tr>  <tr style=\"background-color:#f2f2f2;\"> <td><b>Invoice Amount</b></td> <td>₹ {{$json[\"Amount\"]}}</td> </tr>  <tr> <td><b>Department</b></td> <td>{{$json[\"Department\"]}}</td> </tr>  <tr style=\"background-color:#f2f2f2;\"> <td><b>Risk Status</b></td> <td style=\"color:green;\"> <b>{{$json[\"Risk_Flag\"]}}</b> </td> </tr>  <tr> <td><b>Approval Level</b></td> <td>{{$json[\"Approval_Level\"]}}</td> </tr>  <tr style=\"background-color:#f2f2f2;\"> <td><b>Duplicate Check</b></td> <td>{{$json[\"Duplicate_Check\"]}}</td> </tr>  </table>  <br>  <h3>✅ System Decision</h3>  <ul> <li>Invoice classified as low financial risk</li> <li>No high-value invoice risk detected</li> <li>No liability-based financial risk detected</li> <li>EBITDA margin is within acceptable range</li> <li>Eligible for auto approval workflow</li> <li>No escalation required</li> </ul>  <br>  <p style=\"color:gray;\"> This approval was generated automatically using the  <b>n8n AI Financial Automation Workflow</b>. </p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        288
+      ],
+      "id": "7ea98cae-1c55-4de2-a17e-fd950d42e25e",
+      "name": "Send a message3",
+      "webhookId": "b129c7fe-14fc-480f-85ce-a0417d32a8d3",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "L0szFbuJNr5ckZPl",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs",
+          "mode": "list",
+          "cachedResultName": "Copy of Chitkara AI-Powered Enterprise Financial Risk Monitoring & Intelligent Approval System",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2263047,
+          "mode": "list",
+          "cachedResultName": "Invoice_Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs/edit#gid=2263047"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Invoice_ID": "={{ $('Get row(s) in sheet').item.json.Invoice_ID }}",
+            "Risk_Category": "high invoice risk",
+            "Decision": "CFO review required ",
+            "Email_Sent": "yes",
+            "Alert_Type": "high invoice / fraud alert",
+            "Processed_Time": "={{ $now }}"
+          },
+          "matchingColumns": [
+            "Invoice_ID"
+          ],
+          "schema": [
+            {
+              "id": "Invoice_ID",
+              "displayName": "Invoice_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Vendor_Name",
+              "displayName": "Vendor_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Amount",
+              "displayName": "Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Due_Date",
+              "displayName": "Due_Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Department",
+              "displayName": "Department",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "GST_Number",
+              "displayName": "GST_Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Payment_Mode",
+              "displayName": "Payment_Mode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Flag",
+              "displayName": "Risk_Flag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Duplicate_Check",
+              "displayName": "Duplicate_Check",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Approval_Level",
+              "displayName": "Approval_Level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email_Action",
+              "displayName": "Email_Action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company_ID",
+              "displayName": "Company_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Revenue",
+              "displayName": "Revenue",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "EBITDA",
+              "displayName": "EBITDA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Net_Profit",
+              "displayName": "Net_Profit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Assets",
+              "displayName": "Assets",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Liabilities",
+              "displayName": "Liabilities",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Invoice_Amount",
+              "displayName": "Invoice_Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Status",
+              "displayName": "Risk_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "AI_Risk_Summary",
+              "displayName": "AI_Risk_Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Category",
+              "displayName": "Risk_Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Decision",
+              "displayName": "Decision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email_Sent",
+              "displayName": "Email_Sent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Alert_Type",
+              "displayName": "Alert_Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Processed_Time",
+              "displayName": "Processed_Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        864,
+        -192
+      ],
+      "id": "e3719869-1b3d-4867-bd85-13bdb2020bda",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "yEgaColFwLNmFz3A",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs",
+          "mode": "list",
+          "cachedResultName": "Copy of Chitkara AI-Powered Enterprise Financial Risk Monitoring & Intelligent Approval System",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2263047,
+          "mode": "list",
+          "cachedResultName": "Invoice_Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs/edit#gid=2263047"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Invoice_ID": "={{ $('Get row(s) in sheet').item.json.Invoice_ID }}",
+            "Risk_Category": "financial risk",
+            "Decision": "financial review requried ",
+            "Email_Sent": "yes",
+            "Alert_Type": "high liability / financial risk alert",
+            "Processed_Time": "={{ $now }}"
+          },
+          "matchingColumns": [
+            "Invoice_ID"
+          ],
+          "schema": [
+            {
+              "id": "Invoice_ID",
+              "displayName": "Invoice_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Vendor_Name",
+              "displayName": "Vendor_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Amount",
+              "displayName": "Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Due_Date",
+              "displayName": "Due_Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Department",
+              "displayName": "Department",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "GST_Number",
+              "displayName": "GST_Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Payment_Mode",
+              "displayName": "Payment_Mode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Flag",
+              "displayName": "Risk_Flag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Duplicate_Check",
+              "displayName": "Duplicate_Check",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Approval_Level",
+              "displayName": "Approval_Level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email_Action",
+              "displayName": "Email_Action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company_ID",
+              "displayName": "Company_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Revenue",
+              "displayName": "Revenue",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "EBITDA",
+              "displayName": "EBITDA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Net_Profit",
+              "displayName": "Net_Profit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Assets",
+              "displayName": "Assets",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Liabilities",
+              "displayName": "Liabilities",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Invoice_Amount",
+              "displayName": "Invoice_Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Status",
+              "displayName": "Risk_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "AI_Risk_Summary",
+              "displayName": "AI_Risk_Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Category",
+              "displayName": "Risk_Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Decision",
+              "displayName": "Decision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email_Sent",
+              "displayName": "Email_Sent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Alert_Type",
+              "displayName": "Alert_Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Processed_Time",
+              "displayName": "Processed_Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1088,
+        -96
+      ],
+      "id": "9c073837-c170-44e7-9ccc-6c54908f148a",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "yEgaColFwLNmFz3A",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs",
+          "mode": "list",
+          "cachedResultName": "Copy of Chitkara AI-Powered Enterprise Financial Risk Monitoring & Intelligent Approval System",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2263047,
+          "mode": "list",
+          "cachedResultName": "Invoice_Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs/edit#gid=2263047"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Invoice_ID": "={{ $('Get row(s) in sheet').item.json.Invoice_ID }}",
+            "Risk_Category": "operational risk",
+            "Decision": "operational review required",
+            "Email_Sent": "yes",
+            "Alert_Type": "low EBITDA warning",
+            "Processed_Time": "={{ $now }}"
+          },
+          "matchingColumns": [
+            "Invoice_ID"
+          ],
+          "schema": [
+            {
+              "id": "Invoice_ID",
+              "displayName": "Invoice_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Vendor_Name",
+              "displayName": "Vendor_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Amount",
+              "displayName": "Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Due_Date",
+              "displayName": "Due_Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Department",
+              "displayName": "Department",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "GST_Number",
+              "displayName": "GST_Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Payment_Mode",
+              "displayName": "Payment_Mode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Flag",
+              "displayName": "Risk_Flag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Duplicate_Check",
+              "displayName": "Duplicate_Check",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Approval_Level",
+              "displayName": "Approval_Level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email_Action",
+              "displayName": "Email_Action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company_ID",
+              "displayName": "Company_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Revenue",
+              "displayName": "Revenue",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "EBITDA",
+              "displayName": "EBITDA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Net_Profit",
+              "displayName": "Net_Profit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Assets",
+              "displayName": "Assets",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Liabilities",
+              "displayName": "Liabilities",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Invoice_Amount",
+              "displayName": "Invoice_Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Status",
+              "displayName": "Risk_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "AI_Risk_Summary",
+              "displayName": "AI_Risk_Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Category",
+              "displayName": "Risk_Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Decision",
+              "displayName": "Decision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email_Sent",
+              "displayName": "Email_Sent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Alert_Type",
+              "displayName": "Alert_Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Processed_Time",
+              "displayName": "Processed_Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1248,
+        96
+      ],
+      "id": "a9759eae-d747-4889-85c4-322fb9deafb5",
+      "name": "Update row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "yEgaColFwLNmFz3A",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs",
+          "mode": "list",
+          "cachedResultName": "Copy of Chitkara AI-Powered Enterprise Financial Risk Monitoring & Intelligent Approval System",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2263047,
+          "mode": "list",
+          "cachedResultName": "Invoice_Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1RL99kac1OUw0vqvMRc0isHLJNBZLrG9l1A54xJtcSAs/edit#gid=2263047"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Invoice_ID": "={{ $('Get row(s) in sheet').item.json.Invoice_ID }}",
+            "Risk_Category": "low risk ",
+            "Decision": "auto approval",
+            "Email_Sent": "yes",
+            "Alert_Type": "auto approval",
+            "Processed_Time": "={{ $now }}"
+          },
+          "matchingColumns": [
+            "Invoice_ID"
+          ],
+          "schema": [
+            {
+              "id": "Invoice_ID",
+              "displayName": "Invoice_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Vendor_Name",
+              "displayName": "Vendor_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Amount",
+              "displayName": "Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Due_Date",
+              "displayName": "Due_Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Department",
+              "displayName": "Department",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "GST_Number",
+              "displayName": "GST_Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Payment_Mode",
+              "displayName": "Payment_Mode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Flag",
+              "displayName": "Risk_Flag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Duplicate_Check",
+              "displayName": "Duplicate_Check",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Approval_Level",
+              "displayName": "Approval_Level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email_Action",
+              "displayName": "Email_Action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company_ID",
+              "displayName": "Company_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Revenue",
+              "displayName": "Revenue",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "EBITDA",
+              "displayName": "EBITDA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Net_Profit",
+              "displayName": "Net_Profit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Assets",
+              "displayName": "Assets",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Liabilities",
+              "displayName": "Liabilities",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Invoice_Amount",
+              "displayName": "Invoice_Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Status",
+              "displayName": "Risk_Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "AI_Risk_Summary",
+              "displayName": "AI_Risk_Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Category",
+              "displayName": "Risk_Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Decision",
+              "displayName": "Decision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email_Sent",
+              "displayName": "Email_Sent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Alert_Type",
+              "displayName": "Alert_Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Processed_Time",
+              "displayName": "Processed_Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1248,
+        288
+      ],
+      "id": "eb453dc2-ea99-4444-b8a3-db6338ad0159",
+      "name": "Update row in sheet3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "yEgaColFwLNmFz3A",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message2": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message3": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "3e4cc58f-6234-4720-950f-e2d007b8de9c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e7c6152f2870f8884a8d9d0344056d89d7c1d274134014e322cba3d3828f12f7"
+  },
+  "id": "O5HT6ralNTa7BTPZ",
+  "tags": []
+}
